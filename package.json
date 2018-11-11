@@ -1,0 +1,17 @@
+{
+  "name": "gangadhar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "readline": "^1.3.0",
+    "textract": "^2.4.0"
+  }
+}

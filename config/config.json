@@ -1,0 +1,19 @@
+{
+    "development": {
+        "config_id": "development",
+        "in_path": "C:\\Data\\test\\in",
+        "out_path": "C:\\Data\\test\\out",
+        "deep_search" : true,
+        "regex_pattern": [
+            "/*/*/"
+        ],
+        "allowed_ext": [
+            ".docx",
+            ".doc"
+        ]
+    },
+    "staging": {
+    },
+    "production": {
+    }
+}
