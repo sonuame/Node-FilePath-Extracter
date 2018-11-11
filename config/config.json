@@ -3,7 +3,7 @@
         "config_id": "development",
         "in_path": "C:\\Data\\test\\in",
         "out_path": "C:\\Data\\test\\out",
-        "deep_search" : true,
+        "deep_search" : false,
         "regex_pattern": [
             "/*/*/"
         ],
