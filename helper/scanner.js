@@ -13,7 +13,9 @@ module.exports = {
         let errors = [];
         let file = require('file-system');
         let cnt = 0;
+        let allFiles = 0;
         file.recurse(inPath, null, function(fpath, rel, filename) {
+            allFiles++;
             if (ext.indexOf(path.extname(fpath)) != -1) {
                 cnt++
                 cb.increment();
@@ -24,6 +26,8 @@ module.exports = {
                     }
                     if(cb.decrement())
                     {
+                        console.log("------- RESULT -------------\n")
+                        console.log(" Total no of files under input directory - ", allFiles);
                         callback(log, errors);
                     }
                 }, function(e) {
@@ -35,6 +39,8 @@ module.exports = {
                     errors.push(rs);
                     if(cb.decrement())
                     {
+                        console.log("------- RESULT -------------\n")
+                        console.log(" Total no of files under input directory - ", allFiles);
                         callback(log, errors);
                     }
                 })
