@@ -11,13 +11,13 @@ const scanner = require('./helper/scanner.js');
 var start = new Date().getTime();
 scanner.StartScan(function (successlog, errorlog) {
     console.log("------- RESULT -------------\n")
-    let excTime = (new Date().getTime() - start) / 1000;
-    if(excTime >= 60) {
-        console.log('\n Execution Time - ', excTime / 60, ' sec.');
-    }
-    else {
-        console.log('\n Execution Time - ', excTime, ' sec.');
-    }    
+    // let excTime = (new Date().getTime() - start) / 1000;
+    // if(excTime >= 60) {
+    //     console.log('\n Execution Time - ', Math.abs(excTime / 60), ' mins');
+    // }
+    // else {
+    //     console.log('\n Execution Time - ', Math.abs(excTime), ' sec.');
+    // }
     console.log(" Total no of files - ", successlog.length + errorlog.length);
     console.log(" Successful scans - ", successlog.length);
     console.log(" Errors - ", errorlog.length);
