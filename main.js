@@ -1,4 +1,3 @@
-
 process.env.NODE_ENV = 'development';
 const config = require('./config/config.js');
 
@@ -9,20 +8,28 @@ app.get('/', (req, res) => {
 });
 
 const scanner = require('./helper/scanner.js');
-scanner.StartScan(function (rs) {
+scanner.StartScan(function (successlog, errorlog) {
     console.log("------- RESULT -------------\n")
-    console.log(JSON.stringify(rs));
-    WriteToFile(JSON.stringify(rs));
-}, function (err) {
-    console.log(err);
+    // console.log(JSON.stringify(rs));
+
+    console.log("\n Total no of files - ", successlog.length + errorlog.length);
+    console.log(" Successful scans - ", successlog.length);
+    console.log(" Errors - ", errorlog.length);
+    console.log("\n ");
+
+    let path = require('path');
+    let outpath = path.join(global.gConfig.out_path, 'report.json');
+    WriteToFile(JSON.stringify(successlog), outpath);
+
+    let errorLogPath = path.join(global.gConfig.out_path, 'errorlog.json');
+    WriteToFile(JSON.stringify(errorlog), errorLogPath);
 })
 
-function WriteToFile(data) {
+function WriteToFile(data, outpath) {
     var fs = require('fs'),
         path = require('path');
-    var reportPath =  path.join(global.gConfig.out_path, 'report.txt');
-    fs.writeFile(reportPath, data, function(err, data){
+    fs.writeFile(outpath, data, function(err, data){
         if (err) { console.log(err); }
-        console.log("\nReport file created successfully.");
+        console.log(" Log file created successfully - ", outpath);
     });
  }

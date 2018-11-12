@@ -1,34 +1,45 @@
 var inPath = global.gConfig.in_path,
     outPath = global.gConfig.out_path,
-    ext = global.gConfig.allowed_ext,
-    deepSearch = global.gConfig.deep_search;
+    ext = global.gConfig.allowed_ext;
 
 var fs = require('fs'),
     path = require('path'),
     cb = require('./callback.js');
 
 module.exports = {
-    StartScan: function(success, error)
+    StartScan: function(callback)
     {
-        var log = [];
-        var files = getFilesInDirectory(inPath, ext, deepSearch);
-        for(var i = 0; i < files.length; i++) {
-            cb.increment();
-            var filename = files[i].split('\\')[files[i].split('\\').length-1];
-            console.log('Processing ', i+1, ' of ', files.length, ' - ', filename);
-            scanDocument(files[i], function(d) {
-                if(d != null) {
-                    log.push(d);
-                }
-                if(cb.decrement())
-                {
-                    success(log);
-                }
-            }, function(e) {
-                error(e);
-                cnt--;
-            })
-        }
+        let log = [];
+        let errors = [];
+        let file = require('file-system');
+        let cnt = 0;
+        file.recurse(inPath, null, function(fpath, rel, filename) {
+            if (ext.indexOf(path.extname(fpath)) != -1) {
+                cnt++
+                cb.increment();
+                console.log('Processing file - ', cnt + 1,'- ', filename);
+                scanDocument(fpath, function(d) {
+                    if(d != null) {
+                        log.push(d);
+                    }
+                    if(cb.decrement())
+                    {
+                        callback(log, errors);
+                    }
+                }, function(e) {
+                    let rs = {
+                        filename : filename,
+                        filepath : fpath,
+                        error: e
+                    }
+                    errors.push(rs);
+                    if(cb.decrement())
+                    {
+                        callback(log, errors);
+                    }
+                })
+            }
+        });
     }
 }
 
@@ -67,32 +78,6 @@ function scanDocument(fPath, success, error) {
     })
 }
 
-// Get all files from specified directory
-function getFilesInDirectory(dir, allowedExt, deepSearch = false) {
-    if (!fs.existsSync(dir)) {
-        console.log(`Specified directory: ${dir} does not exist`);
-        return;
-    }
-
-    let files = [];
-    fs.readdirSync(dir).forEach(file => {
-        const filePath = path.join(dir, file);
-        const stat = fs.lstatSync(filePath);
-
-        if (stat.isDirectory()) {
-            if(deepSearch === true) {
-                const nestedFiles = getFilesInDirectory(filePath, allowedExt);
-                files = files.concat(nestedFiles);
-            }
-        } else {
-            if (allowedExt.indexOf(path.extname(file)) != -1) {
-                files.push(filePath);
-            }
-        }
-    });
-
-    return files;
-}
 
 // Match regex patterns
 function scanURL(line) {

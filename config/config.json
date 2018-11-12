@@ -1,15 +1,16 @@
 {
     "development": {
         "config_id": "development",
+        // "in_path": "C:\\Data\\test\\in\\",
+        // "out_path": "C:\\Data\\test\\out\\",
         "in_path": "C:\\Users\\sunikumar\\Downloads\\German2English Translation-20181112T061952Z-001\\German2English Translation",
         "out_path": "C:\\Users\\sunikumar\\Downloads\\German2English Translation-20181112T061952Z-001\\Out",
-        "deep_search" : true,
         "regex_pattern": [
             "/*/*/"
         ],
         "allowed_ext": [
-            ".docx",
-            ".doc"
+            ".doc",
+            ".docx"
         ]
     },
     "staging": {
