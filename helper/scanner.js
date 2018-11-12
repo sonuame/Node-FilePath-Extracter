@@ -14,6 +14,8 @@ module.exports = {
         var files = getFilesInDirectory(inPath, ext, deepSearch);
         for(var i = 0; i < files.length; i++) {
             cb.increment();
+            var filename = files[i].split('\\')[files[i].split('\\').length-1];
+            console.log('Processing ', i+1, ' of ', files.length, ' - ', filename);
             scanDocument(files[i], function(d) {
                 if(d != null) {
                     log.push(d);
