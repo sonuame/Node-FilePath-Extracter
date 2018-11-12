@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'beno';
 const config = require('./config/config.js');
 
 const express = require('express');
@@ -8,11 +8,11 @@ app.get('/', (req, res) => {
 });
 
 const scanner = require('./helper/scanner.js');
+var start = new Date().getTime();
 scanner.StartScan(function (successlog, errorlog) {
     console.log("------- RESULT -------------\n")
-    // console.log(JSON.stringify(rs));
-
-    console.log("\n Total no of files - ", successlog.length + errorlog.length);
+    console.log('\n Excecution Time - ', new Date().getTime() - start);
+    console.log(" Total no of files - ", successlog.length + errorlog.length);
     console.log(" Successful scans - ", successlog.length);
     console.log(" Errors - ", errorlog.length);
     console.log("\n ");

@@ -30,7 +30,7 @@ module.exports = {
                     let rs = {
                         filename : filename,
                         filepath : fpath,
-                        error: e
+                        error: e.toString()
                     }
                     errors.push(rs);
                     if(cb.decrement())

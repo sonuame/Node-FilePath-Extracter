@@ -1,10 +1,20 @@
 {
-    "development": {
-        "config_id": "development",
-        // "in_path": "C:\\Data\\test\\in\\",
-        // "out_path": "C:\\Data\\test\\out\\",
+    "sunil": {
+        "config_id": "sunil",
         "in_path": "C:\\Users\\sunikumar\\Downloads\\German2English Translation-20181112T061952Z-001\\German2English Translation",
         "out_path": "C:\\Users\\sunikumar\\Downloads\\German2English Translation-20181112T061952Z-001\\Out",
+        "regex_pattern": [
+            "/*/*/"
+        ],
+        "allowed_ext": [
+            ".doc",
+            ".docx"
+        ]
+    },
+    "beno": {
+        "config_id": "beno",
+        "in_path": "C:\\Data\\test\\in\\",
+        "out_path": "C:\\Data\\test\\out\\",
         "regex_pattern": [
             "/*/*/"
         ],
