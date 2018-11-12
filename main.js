@@ -13,10 +13,10 @@ scanner.StartScan(function (successlog, errorlog) {
     console.log("------- RESULT -------------\n")
     let excTime = (new Date().getTime() - start) / 1000;
     if(excTime >= 60) {
-        console.log('\n Excecution Time - ', excTime / 60, ' sec.');
+        console.log('\n Execution Time - ', excTime / 60, ' sec.');
     }
     else {
-        console.log('\n Excecution Time - ', excTime, ' sec.');
+        console.log('\n Execution Time - ', excTime, ' sec.');
     }    
     console.log(" Total no of files - ", successlog.length + errorlog.length);
     console.log(" Successful scans - ", successlog.length);
