@@ -1,5 +1,4 @@
 var inPath = global.gConfig.in_path,
-    outPath = global.gConfig.out_path,
     ext = global.gConfig.allowed_ext;
 
 var fs = require('fs'),
@@ -9,6 +8,9 @@ var fs = require('fs'),
 module.exports = {
     StartScan: function(callback)
     {
+        // For Regex Testing
+        //regexTester(); return;
+
         let log = [];
         let errors = [];
         let file = require('file-system');
@@ -84,24 +86,70 @@ function scanDocument(fPath, success, error) {
     })
 }
 
-
 // Match regex patterns
 function scanURL(line) {
-    var patterns = global.gConfig.regex_pattern;
+
+    var patterns = [
+        // For Windows Paths
+        //new RegExp(/(([a-zA-Z]\:|\\)(\\w+)*\\[a-zA-Z0_9]+)/g),
+        new RegExp(/(([a-zA-Z]\:|\\)(w+)*\\)/g),
+        
+        // For UNIX/Linux Paths
+        new RegExp(/\/$|(^(?=\/)|^\.|^\.\.|^\~|^\~(?=\/))(\/(?=[^/\0])[^/\0]+)*\/?/g),
+    ];
+
     var rs = null;
     for(var i = 0; i < patterns.length; i++) {
-        var reqex = new RegExp(patterns[i]);
-        if(reqex.test(line)) {
+        var matchedResult = line.match(patterns[i]);
+        if(matchedResult && matchedResult.length > 0) {
             rs = {
                     LineText: line,
                     MatchedPattern: patterns[i],
                     LineNo: null
                  };
+
+            return rs;
         }
     }
+
     return rs;
 }
 
+// Testing Method for Regex Pattern Matching
+function regexTester() {
+
+    var inputs = [
+        // Window
+        'c:\\test\\test',
+        'C:\\Program Files (x86)\\Button Shop 4',
+        'C:\\Program Files (x86)\\Button Shop 4\\test.html',
+        '\\\\shared\\test\\test\\abc.html',
+        '\\\\192.168.0.1\\my.folder\\folder.2\\file.gif',
+
+        // Linux
+        '/test/test/test',
+        '/usr/local/data/userdata.xls',
+        '/home/userdata.doc',
+        '/accounts.txt',
+        '//usr/local/data/userdata.xls',
+        '//usr/local/',
+    ];
+    
+    console.log('\n Test Started....\n');
+
+    let result = [];
+    for(var i = 0; i < inputs.length; i++) {
+        let line = inputs[i];
+        let rs = scanURL(line);
+        if(rs) {
+            result.push(rs);
+        } else if(result.findIndex(o => o.LineText == line) == -1) {
+            console.log(' No Match [', i, '] - ', line)
+        }
+    }
+    console.log(result);
+    debugger;
+}
 
 
 
