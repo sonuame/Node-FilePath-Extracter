@@ -28,7 +28,7 @@ module.exports = {
                     }
                     if(cb.decrement())
                     {
-                        console.log("------- RESULT -------------\n")
+                        console.log("\n------- RESULT -------------")
                         console.log(" Total no of files under input directory - ", allFiles);
                         callback(log, errors);
                     }
@@ -72,7 +72,6 @@ function scanDocument(fPath, success, error) {
         for(var j = 0; j < lines.length; j++) {
             var result = scanURL(lines[j]);
             if(result != null) {
-                result.LineNo = j + 1;
                 rs.Result.push(result);
             }
         }
@@ -104,8 +103,7 @@ function scanURL(line) {
         if(matchedResult && matchedResult.length > 0) {
             rs = {
                     LineText: line,
-                    MatchedPattern: patterns[i],
-                    LineNo: null
+                    MatchedPattern: patterns[i].toString()
                  };
 
             return rs;
@@ -150,33 +148,3 @@ function regexTester() {
     console.log(result);
     debugger;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function saveFileToOutFolder(fName, callback) {
-//     var srcPath = global.gConfig.in_path + "\\" + fName;
-//     var destPath = global.gConfig.out_path + "\\" + fName;
-
-//     fs.copyFile(srcPath, destPath, (err) => {
-//         if (err) {
-//             callback('FAILED to copy to out folder' )
-//             console.log('error - ' + err);
-//             return;
-//         }
-//     });
-// }
