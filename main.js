@@ -149,11 +149,14 @@ function generateReadableReport(rs, err) {
                         htmlStr += "<span class='url-cnt'>[" + rs[i].Result.length + " URLs Found]</span>";
                         htmlStr += "in " + rs[i].FileName + "<span class='word-cnt'>[Word Count - " + rs[i].WordCount + "]</span>";
                     htmlStr += "</h1>";
+
+                    let matches = "";
                     for(var j = 0; j < rs[i].Result.length; j++) {
-                        htmlStr += "<div class='report-item-body'>";
-                            htmlStr += "<input class='report-item-linetext' type='text' readonly value='> " + rs[i].Result[j].LineText + "' />";
-                        htmlStr += "</div>";
+                        matches += rs[i].Result[j].LineText + "\n";
                     }
+                    htmlStr += "<div class='report-item-body'>";
+                        htmlStr += "<textarea class='report-item-linetext' type='text' readonly rows='" + (rs[i].Result.length + 2) + "'>" + matches + "</textarea>";
+                    htmlStr += "</div>";
                 htmlStr += "</div>";
             }
         htmlStr += "</body>";
