@@ -65,6 +65,7 @@ function scanDocument(fPath, success, error) {
         var rs = {
                     FileName: path.basename(fPath),
                     FullPath: fPath,
+                    WordCount: 0,
                     Result: []
                  };
         
@@ -73,6 +74,12 @@ function scanDocument(fPath, success, error) {
             var result = scanURL(lines[j]);
             if(result != null) {
                 rs.Result.push(result);
+            }
+
+            let words = lines[j].match(/\S+/g);
+            //let words = lines[j].split(" ");
+            if(words) {
+                rs.WordCount += words.length;
             }
         }
 
@@ -118,8 +125,8 @@ function regexTester() {
 
     var inputs = [
         // Window
-        'c:\\test\\test',
-        'C:\\Program Files (x86)\\Button Shop 4',
+        'c:\\test\\test ghdja sagdhsad gh dghjgsa dghjgdsa hja',
+        'C:\\Program Files (x86)\\Button Shop 4 hdja sagdhsad gh dghjgsa dghjgdsa hja',
         'C:\\Program Files (x86)\\Button Shop 4\\test.html',
         '\\\\shared\\test\\test\\abc.html',
         '\\\\192.168.0.1\\my.folder\\folder.2\\file.gif',
@@ -142,9 +149,8 @@ function regexTester() {
         if(rs) {
             result.push(rs);
         } else if(result.findIndex(o => o.LineText == line) == -1) {
-            console.log(' No Match [', i, '] - ', line)
+            console.log(' No Match [', i, '] (', wordCnt, ') - ', line)
         }
     }
     console.log(result);
-    debugger;
 }

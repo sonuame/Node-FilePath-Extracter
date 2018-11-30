@@ -113,6 +113,11 @@ function generateReadableReport(rs, err) {
                                 color: #710303;
                                 margin-right: 5px;
                             }
+                            .word-cnt {
+                                float: right;
+                                color: #710303;
+                                margin-right: 5px;
+                            }
                             .report-item-body {
                                 padding: 2px 5px 0 5px;
                                 margin: 0;
@@ -142,7 +147,7 @@ function generateReadableReport(rs, err) {
                 htmlStr += "<div class='report-container'>";
                     htmlStr += "<h1 class='report-item-head'>";
                         htmlStr += "<span class='url-cnt'>[" + rs[i].Result.length + " URLs Found]</span>";
-                        htmlStr += "in " + rs[i].FileName + "</h1>";
+                        htmlStr += "in " + rs[i].FileName + "<span class='word-cnt'>[Word Count - " + rs[i].WordCount + "]</span>";
                     htmlStr += "</h1>";
                     for(var j = 0; j < rs[i].Result.length; j++) {
                         htmlStr += "<div class='report-item-body'>";
