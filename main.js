@@ -141,14 +141,18 @@ function generateReadableReport(rs, err) {
                 htmlStr += "<p> Input Directory Path <span class='dir-path'>" + global.gConfig.in_path + "</span></p>";
                 htmlStr += "<p> Successful scans <span class='success-cnt'>" + rs.length + "</span></p>";
                 htmlStr += "<p> Errors <span class='error-cnt'>" + err.length + "</span></p>";
+                htmlStr += "<p> Total word count <span class='dir-path'>{total-word-cnt}</span></p>";
             htmlStr += "</div>";
 
+            let totalWordCnt = 0;
             for(var i = 0; i < rs.length; i++) {
                 htmlStr += "<div class='report-container'>";
                     htmlStr += "<h1 class='report-item-head'>";
                         htmlStr += "<span class='url-cnt'>[" + rs[i].Result.length + " URLs Found]</span>";
                         htmlStr += "in " + rs[i].FileName + "<span class='word-cnt'>[Word Count - " + rs[i].WordCount + "]</span>";
                     htmlStr += "</h1>";
+
+                    totalWordCnt += rs[i].WordCount;
 
                     let matches = "";
                     for(var j = 0; j < rs[i].Result.length; j++) {
@@ -159,6 +163,7 @@ function generateReadableReport(rs, err) {
                     htmlStr += "</div>";
                 htmlStr += "</div>";
             }
+            htmlStr = htmlStr.replace('{total-word-cnt}', totalWordCnt);
         htmlStr += "</body>";
         // #endregion
 
